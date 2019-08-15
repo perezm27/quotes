@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class App {
@@ -15,10 +16,15 @@ public class App {
         Gson gson = new Gson();
 
         Scanner reader = new Scanner(new File("src/main/resources/recentquotes.JSON"));
-//        String quotes = reader.hasNextLine();
+        String quotes = "";
         while(reader.hasNextLine()){
-            System.out.println(reader.nextLine());
-
+            quotes+= reader.nextLine();
         }
+//        System.out.println(quotes);
+        Quote[] allQuotes = new Gson().fromJson(quotes, Quote[].class);
+        for (int i = 0; i <allQuotes.length; i++) {
+            System.out.println(allQuotes[i]);
+        }
+
     }
 }
