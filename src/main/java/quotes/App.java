@@ -21,13 +21,12 @@ public class App {
         try{
 //      Reads in Json File
         Scanner reader = new Scanner(new File("src/main/resources/recentquotes.JSON"));
-        String quotes = "";
+        StringBuilder sb = new StringBuilder();
 //      Ensures all quotes are printed
             while(reader.hasNextLine()){
-                quotes += reader.nextLine();
+                sb.append(reader.nextLine());
             }
-            return quotes;
-//            storeQuotes(quotes);
+            return sb.toString();
         } catch (IOException e){
             e.printStackTrace();
             return "";
@@ -36,18 +35,16 @@ public class App {
 
     public static Quote[] storeQuotes(String quotes){
 //      Stores our quotes & Authors
-        Quote[] allQuotes = new Gson().fromJson(quotes, Quote[].class);
-        return allQuotes;
+        return new Gson().fromJson(quotes, Quote[].class);
     }
 
     public static int generateRandomNumber(Quote[] allQuotes){
         Random randomNumber = new Random();
         int n = randomNumber.nextInt(allQuotes.length);
-        printAuthorAndQuote(allQuotes, n);
         return n;
     }
 
-    public static void printAuthorAndQuote(Quote[] allQuotes, int n){
+    private static void printAuthorAndQuote(Quote[] allQuotes, int n){
         System.out.println(allQuotes[n]);
     }
 
