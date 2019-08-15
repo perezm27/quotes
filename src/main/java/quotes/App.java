@@ -5,20 +5,30 @@ package quotes;
 
 import com.google.gson.Gson;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.util.*;
 
 public class App {
 
     public static void main(String[] args) throws FileNotFoundException {
         Gson gson = new Gson();
 
+//      Reads in Json File
         Scanner reader = new Scanner(new File("src/main/resources/recentquotes.JSON"));
-//        String quotes = reader.hasNextLine();
+        String quotes = "";
+//      Ensures all quotes are printed
         while(reader.hasNextLine()){
-            System.out.println(reader.nextLine());
-
+            quotes+= reader.nextLine();
         }
+//      Stores our quotes & Authors
+        Quote[] allQuotes = new Gson().fromJson(quotes, Quote[].class);
+
+//      Prints out random Quote
+        Random randomNumber = new Random();
+        int n = randomNumber.nextInt(allQuotes.length);
+        System.out.println(allQuotes[n]);
+
+
     }
 }
