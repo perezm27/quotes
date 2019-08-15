@@ -5,30 +5,50 @@ package quotes;
 
 import com.google.gson.Gson;
 
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
 
 public class App {
 
-    public static void main(String[] args) throws FileNotFoundException {
-        Gson gson = new Gson();
+    public static void main(String[] args){
+        String allQuotesAsString = readFile();
+        Quote[] allQuotes = storeQuotes(allQuotesAsString);
+        int randomNumber = generateRandomNumber(allQuotes);
+        printAuthorAndQuote(allQuotes, randomNumber);
+    }
 
+    public static String readFile(){
+        try{
 //      Reads in Json File
         Scanner reader = new Scanner(new File("src/main/resources/recentquotes.JSON"));
         String quotes = "";
 //      Ensures all quotes are printed
-        while(reader.hasNextLine()){
-            quotes+= reader.nextLine();
+            while(reader.hasNextLine()){
+                quotes += reader.nextLine();
+            }
+            return quotes;
+//            storeQuotes(quotes);
+        } catch (IOException e){
+            e.printStackTrace();
+            return "";
         }
+    }
+
+    public static Quote[] storeQuotes(String quotes){
 //      Stores our quotes & Authors
         Quote[] allQuotes = new Gson().fromJson(quotes, Quote[].class);
+        return allQuotes;
+    }
 
-//      Prints out random Quote
+    public static int generateRandomNumber(Quote[] allQuotes){
         Random randomNumber = new Random();
         int n = randomNumber.nextInt(allQuotes.length);
-        System.out.println(allQuotes[n]);
-
-
+        printAuthorAndQuote(allQuotes, n);
+        return n;
     }
+
+    public static void printAuthorAndQuote(Quote[] allQuotes, int n){
+        System.out.println(allQuotes[n]);
+    }
+
 }
