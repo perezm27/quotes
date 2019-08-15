@@ -4,11 +4,26 @@
 package quotes;
 
 import org.junit.Test;
+
+import java.io.File;
+import java.util.Scanner;
+
 import static org.junit.Assert.*;
 
 public class AppTest {
-    @Test public void testAppHasAGreeting() {
-        App classUnderTest = new App();
-        assertNotNull("app should have a greeting", classUnderTest.getGreeting());
+
+    @Test
+    public void canReadFile() throws Exception{
+        App newApp = new App();
+        String result = newApp.readFile();
+        assertTrue("File can be read", result.length() > 0);
+    }
+
+    @Test
+    public void canStoreQuotes(){
+        App newApp = new App();
+        String allTheQuotesAsAString = newApp.readFile();
+        Quote[] quotesArr = newApp.storeQuotes(allTheQuotesAsAString);
+        assertTrue("There are quotes inside this array", quotesArr.length > 0);
     }
 }
