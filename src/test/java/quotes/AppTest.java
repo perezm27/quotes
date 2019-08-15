@@ -3,6 +3,7 @@
  */
 package quotes;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
@@ -11,19 +12,43 @@ import java.util.Scanner;
 import static org.junit.Assert.*;
 
 public class AppTest {
+    App newApp;
+    @Before
+    public void setUp()throws Exception{
+        App newApp = new App();
+    }
 
     @Test
     public void canReadFile() throws Exception{
-        App newApp = new App();
         String result = newApp.readFile();
         assertTrue("File can be read", result.length() > 0);
     }
 
     @Test
     public void canStoreQuotes(){
-        App newApp = new App();
         String allTheQuotesAsAString = newApp.readFile();
         Quote[] quotesArr = newApp.storeQuotes(allTheQuotesAsAString);
         assertTrue("There are quotes inside this array", quotesArr.length > 0);
+    }
+
+    @Test
+    public void canPrintQuotes(){
+        String allTheQuotesAsAString = newApp.readFile();
+        Quote[] quotesArr = newApp.storeQuotes(allTheQuotesAsAString);
+        Quote result = quotesArr[0];
+        String value ="Marilyn Monroe:  “I am good, but not an angel. I do sin, but I am not the devil. I am just a small girl in a big world trying to find someone to love.”";
+
+        assertEquals(value.trim(), quotesArr[0].toString().trim());
+    }
+    @Test
+    public void testRandomNumGen(){
+        String allTheQuotesAsAString = newApp.readFile();
+        Quote[] quotesArr = newApp.storeQuotes(allTheQuotesAsAString);
+        int n = newApp.generateRandomNumber(quotesArr);
+        boolean isInRange = false;
+        if(n >= 0 && n<= quotesArr.length){
+            isInRange = true;
+        }
+        assertTrue(isInRange);
     }
 }
