@@ -35,7 +35,6 @@ public class AppTest {
     public void canPrintQuotes(){
         String allTheQuotesAsAString = newApp.readFile();
         Quote[] quotesArr = newApp.storeQuotes(allTheQuotesAsAString);
-        Quote result = quotesArr[0];
         String value ="Marilyn Monroe:  “I am good, but not an angel. I do sin, but I am not the devil. I am just a small girl in a big world trying to find someone to love.”";
 
         assertEquals(value.trim(), quotesArr[0].toString().trim());
