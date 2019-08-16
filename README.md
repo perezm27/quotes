@@ -17,3 +17,23 @@ Just run <b>./gradlew run</b> to install proper dependencies.
 ## Authors
 * [Bomi Bear](https://github.com/bomibear)
 * [Perezm27](https://github.com/perezm27)
+
+
+## Lab 9 : Web requests
+Rather than using a hardcoded file of JSON data with quotes, you’ll grab quotes from an API and display those to the user.
+
+## Feature Tasks
+When running the application, don’t read in the quotes file. Instead, make a request to an API to get a random quote.  
+Ensure that if your app has errors in connecting to the Internet, you instead display a random quote from your file.  
+Add that functionality: when a quote comes back from a request, it’s also cached in the json file.  
+
+## Sources 
+[StarWars Api](http://swquotesapi.digitaljedi.dk/index.html)  
+[HTTP Request Java](https://www.baeldung.com/java-http-request)
+
+## Collaborative Efforts
+* Nick Paro
+* Matt Stuhring
+
+# Author
+* [Perezm27](https://github.com/perezm27)
