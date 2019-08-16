@@ -4,18 +4,61 @@
 package quotes;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 
 import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.*;
 
 public class App {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         String allQuotesAsString = readFile();
         Quote[] allQuotes = storeQuotes(allQuotesAsString);
         int randomNumber = generateRandomNumber(allQuotes);
         printAuthorAndQuote(allQuotes, randomNumber);
+        apiCall();
+
     }
+
+    public static void apiCall(){
+//  Connection to API
+        try {
+            URL url =  url = new URL("http://swquotesapi.digitaljedi.dk/api/SWQuote/RandomStarWarsQuote");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("GET");
+            System.out.println(connection.getResponseCode());
+
+//  Reads in the request response
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String inputLine;
+            StringBuffer content = new StringBuffer();
+            while((inputLine = in.readLine()) != null){
+                content.append(inputLine);
+            }
+            in.close();
+
+//            AddToJson(content.toString());
+
+//          System.out.println(content);
+            Gson gson = new Gson();
+            Quote apiQuote = gson.fromJson(content.toString(), Quote.class);
+            System.out.println(apiQuote.starWarsQuote);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+//  Create method to add to jsonfile
+//    public void addtoJsonFile(String content){
+//        JsonArray jsonArrQuote = new JsonArray();
+//    }
+
+//    json object to json array
+
+// create method to add to jsonArray
 
     public static String readFile(){
         try{
