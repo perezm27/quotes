@@ -3,8 +3,8 @@
  */
 package quotes;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
+import com.google.gson.*;
+import com.google.gson.stream.JsonReader;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -19,6 +19,7 @@ public class App {
         int randomNumber = generateRandomNumber(allQuotes);
         printAuthorAndQuote(allQuotes, randomNumber);
         apiCall();
+//        addtoJsonArr();
 
     }
 
@@ -31,20 +32,30 @@ public class App {
             System.out.println(connection.getResponseCode());
 
 //  Reads in the request response
-            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            String inputLine;
-            StringBuffer content = new StringBuffer();
-            while((inputLine = in.readLine()) != null){
-                content.append(inputLine);
-            }
-            in.close();
+            JsonReader reader = new JsonReader(new InputStreamReader(connection.getInputStream()));
+            JsonParser parser = new JsonParser();
+            JsonElement rootElement = parser.parse(reader);
+            JsonObject apiQuoteJson = rootElement.getAsJsonObject();
 
-//            AddToJson(content.toString());
-
-//          System.out.println(content);
             Gson gson = new Gson();
-            Quote apiQuote = gson.fromJson(content.toString(), Quote.class);
-            System.out.println(apiQuote.starWarsQuote);
+            Quote apiQuote = gson.fromJson(apiQuoteJson, Quote.class);
+//            System.out.println(apiQuote.starWarsQuote);
+            gson.toJson(apiQuote.starWarsQuote);
+
+            apiQuoteJson.add("text", apiQuoteJson.get("starWarsQuote"));
+            System.out.println(gson.toJson(apiQuote.starWarsQuote));
+
+            JsonArray jsonArray = new JsonArray();
+
+            jsonArray = gson.fromJson(new FileReader("./src/main/resources/recentquotes.json"), JsonArray.class);
+
+            jsonArray.add(gson.toJson(apiQuote.starWarsQuote));
+            FileWriter writeToFile = new FileWriter("src/main/resources/test.JSON");
+            gson.toJson(jsonArray, writeToFile);
+            writeToFile.close();
+
+
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -56,9 +67,19 @@ public class App {
 //        JsonArray jsonArrQuote = new JsonArray();
 //    }
 
-//    json object to json array
-
 // create method to add to jsonArray
+//    public static JsonArray addtoJsonArr(String apiQuoteJson){
+//        JsonArray jsonArray = new JsonArray();
+//        apiQuoteJson.addProperty("text", apiQuote.starWarsQuote);
+//
+//        jsonArray.add(apiQuoteJson);
+//        FileWriter writeToFile = new FileWriter("src/main/resources/test.JSON");
+//        gson.toJson(apiQuoteJson, writeToFile);
+//        writeToFile.close();
+//
+//        return jsonArray;
+//    }
+
 
     public static String readFile(){
         try{

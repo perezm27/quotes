@@ -29,7 +29,8 @@ Add that functionality: when a quote comes back from a request, it’s also cach
 
 ## Sources 
 [StarWars Api](http://swquotesapi.digitaljedi.dk/index.html)  
-[HTTP Request Java](https://www.baeldung.com/java-http-request)
+[HTTP Request Java](https://www.baeldung.com/java-http-request)  
+[Parsing JSON Object](https://javabeat.net/invoking-restful-web-service-using-api-in-java-net-and-gson/)
 
 ## Collaborative Efforts
 * Nick Paro
